@@ -5,12 +5,12 @@ import json
 
 class Notion():
 
-    def __init__(self, wifi_parameters, notion_database_id, notion_auth):
+    def __init__(self, wifi_parameters, notion_parameters):
         # Set parameters
         self.ssid = wifi_parameters["ssid"] 
         self.password = wifi_parameters["password"]
-        self.database_id = notion_database_id
-        self.auth = notion_auth
+        self.database_id = notion_parameters["database_id"]
+        self.auth = notion_parameters["auth"]
         self.wlan = network.WLAN(network.STA_IF)
         
         self.connect_to_wifi()
@@ -61,5 +61,5 @@ class Notion():
         response = urequests.post(f"https://api.notion.com/v1/databases/{self.database_id}/query", headers=headers, data=json.dumps(data))
         text = response.text
         response.close()
-        return text
+        return json.loads(text)
     #['results'][0]['properties']['Name']['title'][0]['plain_text']
