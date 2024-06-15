@@ -12,9 +12,7 @@ class Notion():
         self.database_id = notion_parameters["database_id"]
         self.auth = notion_parameters["auth"]
         self.wlan = network.WLAN(network.STA_IF)
-        
-        self.connect_to_wifi()
-    
+            
     def __del__(self):
         # Disconnect from the internet upon deleting the object
         self.disconnect_from_wifi()
@@ -39,11 +37,12 @@ class Notion():
         else:
             print("Failed to disconnect from WiFi")
 
-    def get_time(self):
+    def get_date(self):
         response = urequests.get("https://worldtimeapi.org/api/timezone/America/Denver")
         data = response.json()
         # print(data)
         timestamp = data["datetime"]
+        timestamp = str(timestamp)[0:10]
         print(timestamp)
         return timestamp
 
@@ -54,12 +53,15 @@ class Notion():
                     }
         data = {"filter": {
                     "property": "Date",
-                    "rich_text": {
-                        "contains": f"2024-06-11",
-                    },
+                    "date": {
+                        "equals": f"{self.get_date()}",
+                    }
                 }}
         response = urequests.post(f"https://api.notion.com/v1/databases/{self.database_id}/query", headers=headers, data=json.dumps(data))
         text = response.text
         response.close()
-        return json.loads(text)
-    #['results'][0]['properties']['Name']['title'][0]['plain_text']
+        goal_data = json.loads(text)
+        if (len(goal_data['results']) != 0):
+            return goal_data['results'][0]['properties']['Name']['title'][0]['plain_text']
+        else:
+            return "Error w/Goal"
