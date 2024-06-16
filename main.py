@@ -24,8 +24,8 @@ def main():
     
     # Initialize screen and write goal and scripture to screen
     oled = Screen()
-    oled.write_text(goal,0,0)
-    oled.write_text(daily_scrip,0,10)
+    oled.write_wrapped_text(daily_scrip)
+    oled.write_wrapped_text(goal)
     
     # Lightsleep time variables
     ten_seconds_in_ms = 10000
@@ -49,8 +49,8 @@ def main():
         
         # Change display
         oled.clear_screen()
-        oled.write_text(goal,0,0)
-        oled.write_text(daily_scrip,0,10)
+        oled.write_wrapped_text(daily_scrip)
+        oled.write_wrapped_text(goal)
         
 if __name__ == "__main__":
     main()

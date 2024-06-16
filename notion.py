@@ -43,7 +43,6 @@ class Notion():
         # print(data)
         timestamp = data["datetime"]
         timestamp = str(timestamp)[0:10]
-        print(timestamp)
         return timestamp
 
     def get_daily_goal(self):
