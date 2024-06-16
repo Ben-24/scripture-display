@@ -34,7 +34,7 @@ def main():
     twelve_hours_in_ms = 43200000
     first_half = True
     
-    # while (1):       
+    while (1):       
         # Sleep to give screen time to process
         time.sleep(1)
         print("sleep")
