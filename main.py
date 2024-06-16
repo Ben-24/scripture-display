@@ -28,16 +28,17 @@ def main():
     oled.write_wrapped_text(goal)
     
     # Lightsleep time variables
+    ten_ms = 10
     ten_seconds_in_ms = 10000
     one_minute_in_ms = 60000
     twelve_hours_in_ms = 43200000
+    first_half = True
     
     # while (1):       
-    for i in range(2):
         # Sleep to give screen time to process
         time.sleep(1)
         print("sleep")
-        lightsleep(ten_seconds_in_ms)
+        lightsleep(twelve_hours_in_ms)
         
         # Get daily goal
         notion.connect_to_wifi()
@@ -45,7 +46,9 @@ def main():
         notion.disconnect_from_wifi()
         
         # Get daily scripture
-        daily_scrip = scrips.get_random_scripture() 
+        if (first_half):
+            daily_scrip = scrips.get_random_scripture() 
+            first_half = False
         
         # Change display
         oled.clear_screen()
